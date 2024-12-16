@@ -18,12 +18,12 @@ services:
     environment:
       - NAMESRV_ADDR=rmqnamesrv:9876
     volumes:
-      - ./broker.conf:/home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+      - ./broker.conf:/home/rocketmq/rocketmq-4.9.5/conf/broker.conf
     depends_on:
       - namesrv
     networks:
       - rocketmq
-    command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.6/conf/broker.conf
+    command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.5/conf/broker.conf
 
 networks:
   rocketmq:
