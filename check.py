@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 import socket
-import json
+import argparse
+
+# example usage: check.py 127.0.0.1 9876
+parser = argparse.ArgumentParser()
+parser.add_argument('ip', help='RocketMQ nameserver\'s IP', type=str)
+parser.add_argument('port', help='RocketMQ nameserver\'s port', type=int)
+args = parser.parse_args()
 
 # get broker's IP
 payload = '00000065000000617b22636f6465223a3130362c22666c6167223a302c226c616e6775616765223a224a415641222c226f7061717565223a302c2273657269616c697a655479706543757272656e74525043223a224a534f4e222c2276657273696f6e223a3430337d'
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-nameserver_addr = ('172.19.0.2', 9876)
+nameserver_addr = (args.ip, args.port)
 sock.connect(nameserver_addr)
 
 sock.sendall(bytes.fromhex(payload))
