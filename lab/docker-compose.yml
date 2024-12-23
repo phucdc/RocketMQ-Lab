@@ -2,15 +2,18 @@ services:
   namesrv:
     image: apache/rocketmq:4.9.5
     container_name: rmqnamesrv
+    hostname: nameserver
     ports:
       - 9876:9876
     networks:
-      - rocketmq
+      rocketmq:
+        ipv4_address: 10.255.0.2
     command: sh mqnamesrv
 
   broker:
     image: apache/rocketmq:4.9.5
     container_name: rmqbroker
+    hostname: broker
     ports:
       - 10909:10909
       - 10911:10911
@@ -22,9 +25,14 @@ services:
     depends_on:
       - namesrv
     networks:
-      - rocketmq
+      rocketmq:
+        ipv4_address: 10.255.0.3
     command: sh mqbroker -c /home/rocketmq/rocketmq-4.9.5/conf/broker.conf
 
 networks:
   rocketmq:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.255.0.0/29
     
